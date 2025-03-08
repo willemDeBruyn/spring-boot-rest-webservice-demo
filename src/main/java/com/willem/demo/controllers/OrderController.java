@@ -28,12 +28,7 @@ public class OrderController
     public ResponseEntity<Void> deleteOrder(@PathVariable("id") Long id)
     {
         boolean isDeleted = orderService.deleteOrder(id);
-        if (isDeleted)
-        {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.notFound().build();
+        return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
     @GetMapping
