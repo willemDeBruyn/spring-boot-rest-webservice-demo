@@ -2,7 +2,6 @@ package com.willem.demo.model;
 
 import com.willem.demo.entities.Order;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 /**

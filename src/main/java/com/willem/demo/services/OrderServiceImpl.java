@@ -23,8 +23,8 @@ public class OrderServiceImpl implements OrderService
     @Override
     public OrderDto saveOrder(OrderDto orderDto)
     {
-        Order savedOrder = orderRepository.save(orderMapper.orderDtoToOrder(orderDto));
-        return orderMapper.orderToOrderDto(savedOrder);
+        Order savedOrder = orderRepository.save(orderMapper.toEntity(orderDto));
+        return orderMapper.toDto(savedOrder);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService
     {
         List<Order> orders = orderRepository.findAll();
         return orders.stream()
-                .map(orderMapper::orderToOrderDto)
+                .map(orderMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService
     public Optional<OrderDto> findOrderById(Long id)
     {
         Optional<Order> order = orderRepository.findById(id);
-        return order.map(orderMapper::orderToOrderDto);
+        return order.map(orderMapper::toDto);
     }
 
     @Override
@@ -60,9 +60,7 @@ public class OrderServiceImpl implements OrderService
     {
         List<Order> orders = orderRepository.findByCustomerId(customerId);
         return orders.stream()
-                .map(orderMapper::orderToOrderDto)
+                .map(orderMapper::toDto)
                 .collect(Collectors.toList());
     }
-
-
 }

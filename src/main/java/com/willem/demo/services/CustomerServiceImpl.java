@@ -23,9 +23,8 @@ public class CustomerServiceImpl implements CustomerService
     @Override
     public CustomerDto saveCustomer(CustomerDto customerDto)
     {
-        Customer savedCustomer = customerRepository.save(customerMapper.customerDtoToCustomer(customerDto));
-
-        return customerMapper.customerToCustomerDto(savedCustomer);
+        Customer savedCustomer = customerRepository.save(customerMapper.toEntity(customerDto));
+        return customerMapper.toDto(savedCustomer);
     }
 
     @Override
@@ -45,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService
     {
         List<Customer> customers = customerRepository.findAll();
         return customers.stream()
-                .map(customerMapper::customerToCustomerDto)
+                .map(customerMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -53,6 +52,6 @@ public class CustomerServiceImpl implements CustomerService
     public Optional<CustomerDto> findCustomerById(Long id)
     {
         Optional<Customer> customer = customerRepository.findById(id);
-        return customer.map(customerMapper::customerToCustomerDto);
+        return customer.map(customerMapper::toDto);
     }
 }

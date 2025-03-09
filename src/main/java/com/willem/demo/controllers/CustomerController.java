@@ -45,6 +45,5 @@ public class CustomerController
         return customerDto
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
-
     }
 }
