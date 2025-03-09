@@ -39,8 +39,7 @@ public class CustomerController
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable("id") Long id)
-    {
+    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable("id") Long id) {
         Optional<CustomerDto> customerDto = customerService.findCustomerById(id);
         return customerDto
                 .map(ResponseEntity::ok)
