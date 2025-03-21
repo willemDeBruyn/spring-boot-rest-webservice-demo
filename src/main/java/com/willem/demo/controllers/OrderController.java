@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ public class OrderController
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderDto> saveOrder(@RequestBody OrderDto orderDto)
+    public ResponseEntity<OrderDto> saveOrder(@Validated @RequestBody OrderDto orderDto)
     {
         OrderDto savedOrder = orderService.saveOrder(orderDto);
         return ResponseEntity.ok(savedOrder);

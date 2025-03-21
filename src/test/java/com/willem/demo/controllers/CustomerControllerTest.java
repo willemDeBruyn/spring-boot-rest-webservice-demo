@@ -94,13 +94,15 @@ class CustomerControllerTest
     {
         CustomerDto customerDto1 = CustomerDto.builder()
                 .id(1L)
-                .name("John Doe")
+                .name("John")
+                .surname("Doe")
                 .email("john.doe@example.com")
                 .build();
 
         CustomerDto customerDto2 = CustomerDto.builder()
                 .id(2L)
-                .name("Jane Doe")
+                .name("Jane")
+                .surname("Doe")
                 .email("jane.doe@example.com")
                 .build();
 

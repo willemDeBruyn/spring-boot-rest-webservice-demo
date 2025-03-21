@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class CustomerController
     private final CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<CustomerDto> saveCustomer(@RequestBody CustomerDto customerDto)
+    public ResponseEntity<CustomerDto> saveCustomer(@Validated @RequestBody CustomerDto customerDto)
     {
         return ResponseEntity.ok(customerService.saveCustomer(customerDto));
     }
