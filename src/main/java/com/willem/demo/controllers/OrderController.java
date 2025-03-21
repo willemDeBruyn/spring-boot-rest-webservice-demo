@@ -1,5 +1,6 @@
 package com.willem.demo.controllers;
 
+import com.willem.demo.model.CustomerDto;
 import com.willem.demo.model.OrderDto;
 import com.willem.demo.services.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -52,17 +53,23 @@ public class OrderController
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<OrderDto>> getOrderById(@PathVariable("id") Long id)
+    public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") Long id)
     {
         Optional<OrderDto> orderDto = orderService.findOrderById(id);
-
-        return ResponseEntity.ok(orderDto);
+        return orderDto
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<OrderDto>> getOrdersByCustomerId(@PathVariable("customerId") Long customerId)
     {
         List<OrderDto> orderDtos = orderService.findByCustomerId(customerId);
+        if (orderDtos.isEmpty())
+        {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(orderDtos);
     }
 }
