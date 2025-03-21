@@ -6,6 +6,8 @@ import com.willem.demo.model.CustomerDto;
 import com.willem.demo.repositories.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +57,15 @@ public class CustomerServiceImpl implements CustomerService
         return customers.stream()
                 .map(customerMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<CustomerDto> findAllCustomers(Pageable pageable)
+    {
+        log.info("Fetching orders with pagination: {}", pageable);
+
+        return customerRepository.findAll(pageable)
+                .map(customerMapper::toDto);
     }
 
     @Override

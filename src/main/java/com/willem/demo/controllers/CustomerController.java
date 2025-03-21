@@ -3,6 +3,9 @@ package com.willem.demo.controllers;
 import com.willem.demo.model.CustomerDto;
 import com.willem.demo.services.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -32,10 +35,19 @@ public class CustomerController
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerDto>> getAllCustomers()
+    public ResponseEntity<?> getAllCustomers(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size)
     {
-        List<CustomerDto> customerDtos = customerService.findAllCustomers();
-        return ResponseEntity.ok(customerDtos);
+        if (page == null || size == null)
+        {
+            List<CustomerDto> allCustomers = customerService.findAllCustomers();
+            return ResponseEntity.ok(allCustomers);
+        }
+        else
+        {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<CustomerDto> ordersPage = customerService.findAllCustomers(pageable);
+            return ResponseEntity.ok(ordersPage);
+        }
     }
 
     @GetMapping("/{id}")

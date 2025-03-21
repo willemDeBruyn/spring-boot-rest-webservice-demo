@@ -3,6 +3,9 @@ package com.willem.demo.controllers;
 import com.willem.demo.model.OrderDto;
 import com.willem.demo.services.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -21,7 +24,8 @@ public class OrderController
     @PostMapping
     public ResponseEntity<OrderDto> saveOrder(@RequestBody OrderDto orderDto)
     {
-        return ResponseEntity.ok(orderService.saveOrder(orderDto));
+        OrderDto savedOrder = orderService.saveOrder(orderDto);
+        return ResponseEntity.ok(savedOrder);
     }
 
     @DeleteMapping("/{id}")
@@ -32,10 +36,19 @@ public class OrderController
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderDto>> getAllOrders()
-    {
-        List<OrderDto> orderDtos = orderService.findAllOrders();
-        return ResponseEntity.ok(orderDtos);
+    public ResponseEntity<?> getAllOrders(@RequestParam(required = false) Integer page,
+                                          @RequestParam(required = false) Integer size) {
+        if (page == null || size == null)
+        {
+            List<OrderDto> allOrders = orderService.findAllOrders();
+            return ResponseEntity.ok(allOrders);
+        }
+        else
+        {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<OrderDto> ordersPage = orderService.findAllOrders(pageable);
+            return ResponseEntity.ok(ordersPage);
+        }
     }
 
     @GetMapping("/{id}")

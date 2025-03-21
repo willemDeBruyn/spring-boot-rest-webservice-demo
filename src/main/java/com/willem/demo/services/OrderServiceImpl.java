@@ -7,6 +7,8 @@ import com.willem.demo.repositories.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,13 +53,22 @@ public class OrderServiceImpl implements OrderService
     @Override
     public List<OrderDto> findAllOrders()
     {
-        log.info("Fetching all orders.");
-        List<Order> orders = orderRepository.findAll();
+        log.info("Fetching all orders without pagination");
 
-        log.info("Fetched {} orders.", orders.size());
+        // Get all orders and map them to DTOs
+        List<Order> orders = orderRepository.findAll();
         return orders.stream()
                 .map(orderMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<OrderDto> findAllOrders(Pageable pageable)
+    {
+        log.info("Fetching orders with pagination: {}", pageable);
+
+        return orderRepository.findAll(pageable)
+                .map(orderMapper::toDto);
     }
 
     @Override
@@ -68,7 +79,6 @@ public class OrderServiceImpl implements OrderService
         {
             log.info("Order with ID {} found.", id);
             return Optional.of(orderMapper.toDto(order.get()));
-
         }
 
         log.error("Order with ID {} not found.", id);
