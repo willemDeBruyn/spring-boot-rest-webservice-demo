@@ -1,6 +1,7 @@
 package com.willem.demo.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,9 @@ public class GlobalExceptionHandler
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex)
+    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex, HttpServletRequest request)
     {
-        log.error("Internal server error", ex);
+        log.error("Internal server error at URL: {} with method: {}", request.getRequestURL(), request.getMethod(), ex);
 
         ErrorResponse errorResponse = new ErrorResponse("An unexpected error occurred. Please try again later.");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
