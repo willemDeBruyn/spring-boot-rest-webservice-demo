@@ -11,6 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
+@ToString
 public class CustomerDto
 {
     private Long id;
