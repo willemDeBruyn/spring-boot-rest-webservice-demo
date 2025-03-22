@@ -18,7 +18,6 @@ import java.util.List;
 @ToString
 public class CustomerDto
 {
-    @NotNull
     private Long id;
 
     @NotBlank

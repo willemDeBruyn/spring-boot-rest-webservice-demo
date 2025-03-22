@@ -1,6 +1,9 @@
 package com.willem.demo.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import java.util.List;
 
@@ -18,11 +21,19 @@ public class Customer
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(updatable = false, nullable = false)
     private Long id;
 
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String surname;
+
+    @NotBlank
+    @Email
     private String email;
+
     private String phoneNumber;
     private String address;
 

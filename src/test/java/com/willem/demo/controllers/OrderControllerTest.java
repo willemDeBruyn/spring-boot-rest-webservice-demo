@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ class OrderControllerTest
                 .id(1L)
                 .name("ASUS LAPTOP")
                 .description("Gaming laptop")
-                .price(19.99)
+                .price(new BigDecimal("19.99"))
                 .build();
 
         when(orderService.saveOrder(any(OrderDto.class))).thenReturn(orderDto);
@@ -80,14 +81,14 @@ class OrderControllerTest
                 .id(1L)
                 .name("ASUS LAPTOP")
                 .description("Gaming laptop")
-                .price(19.99)
+                .price(new BigDecimal("19.99"))
                 .build();
 
         OrderDto orderDto2 = OrderDto.builder()
                 .id(2L)
                 .name("PlayStation 5")
                 .description("Console")
-                .price(19.99)
+                .price(new BigDecimal("19.99"))
                 .build();
 
         when(orderService.findAllOrders()).thenReturn(List.of(orderDto1, orderDto2));
@@ -108,7 +109,7 @@ class OrderControllerTest
                 .id(orderId)
                 .name("ASUS LAPTOP")
                 .description("Gaming laptop")
-                .price(19.99)
+                .price(new BigDecimal("19.99"))
                 .build();
 
         when(orderService.findOrderById(orderId)).thenReturn(Optional.of(orderDto));

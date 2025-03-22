@@ -41,7 +41,8 @@ class CustomerControllerTest
     {
         CustomerDto customerDto = CustomerDto.builder()
                 .id(1L)
-                .name("John Doe")
+                .name("John")
+                .surname("Doe")
                 .email("john.doe@example.com")
                 .build();
 
@@ -53,7 +54,8 @@ class CustomerControllerTest
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("John Doe"))
+                .andExpect(jsonPath("$.name").value("John"))
+                .andExpect(jsonPath("$.surname").value("Doe"))
                 .andExpect(jsonPath("$.email").value("john.doe@example.com"));
 
         verify(customerService, times(1)).saveCustomer(any(CustomerDto.class));
@@ -112,8 +114,8 @@ class CustomerControllerTest
         // Perform the GET request and check the response
         mockMvc.perform(get("/api/customers"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("John Doe"))
-                .andExpect(jsonPath("$[1].name").value("Jane Doe"));
+                .andExpect(jsonPath("$[0].name").value("John"))
+                .andExpect(jsonPath("$[1].name").value("Jane"));
 
         verify(customerService, times(1)).findAllCustomers();
     }
@@ -124,7 +126,8 @@ class CustomerControllerTest
         Long customerId = 1L;
         CustomerDto customerDto = CustomerDto.builder()
                 .id(customerId)
-                .name("John Doe")
+                .name("John")
+                .surname("Doe")
                 .email("john.doe@example.com")
                 .build();
 
@@ -133,7 +136,8 @@ class CustomerControllerTest
         // Perform the GET request and check the response
         mockMvc.perform(get("/api/customers/{id}", customerId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("John Doe"))
+                .andExpect(jsonPath("$.name").value("John"))
+                .andExpect(jsonPath("$.surname").value("Doe"))
                 .andExpect(jsonPath("$.email").value("john.doe@example.com"));
 
         verify(customerService, times(1)).findCustomerById(customerId);

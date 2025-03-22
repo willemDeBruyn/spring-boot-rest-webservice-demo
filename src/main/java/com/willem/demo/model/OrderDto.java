@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +20,6 @@ import java.time.LocalDateTime;
 @ToString
 public class OrderDto
 {
-    @NotNull
     private Long id;
 
     @NotBlank
@@ -29,7 +30,7 @@ public class OrderDto
 
     @NotNull
     @Positive
-    private Double price;
+    private BigDecimal price;
 
     private Order.OrderStatus status;
     private CustomerDto customer;
