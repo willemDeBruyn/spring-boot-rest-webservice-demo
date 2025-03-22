@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface CustomerService
 {
     CustomerDto saveCustomer(CustomerDto customerDto);
+    CustomerDto updateCustomer(Long id, CustomerDto customerDto);
     boolean deleteCustomer(Long id);
 
     List<CustomerDto> findAllCustomers();

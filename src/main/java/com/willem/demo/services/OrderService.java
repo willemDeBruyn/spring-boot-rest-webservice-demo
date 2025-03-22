@@ -14,6 +14,7 @@ public interface OrderService
 {
     OrderDto saveOrder(OrderDto order);
     boolean deleteOrder(Long id);
+    OrderDto updateOrder(Long id, OrderDto order);
 
     List<OrderDto> findAllOrders();
     Page<OrderDto> findAllOrders(Pageable pageable);

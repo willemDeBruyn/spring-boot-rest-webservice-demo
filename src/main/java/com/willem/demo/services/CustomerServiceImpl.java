@@ -6,6 +6,7 @@ import com.willem.demo.model.CustomerDto;
 import com.willem.demo.repositories.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,28 @@ public class CustomerServiceImpl implements CustomerService
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
+
     @Override
     public CustomerDto saveCustomer(CustomerDto customerDto)
     {
         log.info("Saving customer: {}", customerDto.getId());
         Customer savedCustomer = customerRepository.save(customerMapper.toEntity(customerDto));
         return customerMapper.toDto(savedCustomer);
+    }
+
+    @Override
+    public CustomerDto updateCustomer(Long id, CustomerDto customerDto)
+    {
+        log.info("Updating customer ID {}", id);
+        Customer existingCustomer = customerRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // Update non-null properties from the DTO into the existing entity
+        customerMapper.updateCustomerFromDto(customerDto, existingCustomer);
+
+        Customer updatedCustomer = customerRepository.save(existingCustomer);
+        log.info("Customer updated  ID {}", id);
+        return customerMapper.toDto(updatedCustomer);
     }
 
     @Override

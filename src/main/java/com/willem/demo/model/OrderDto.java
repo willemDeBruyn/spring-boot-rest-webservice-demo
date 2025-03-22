@@ -32,7 +32,12 @@ public class OrderDto
     @Positive
     private BigDecimal price;
 
+    @NotNull
     private Order.OrderStatus status;
+
+    @NotNull
     private CustomerDto customer;
+
+    @NotNull
     private LocalDateTime orderDate;
 }

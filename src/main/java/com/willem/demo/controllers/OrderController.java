@@ -1,6 +1,5 @@
 package com.willem.demo.controllers;
 
-import com.willem.demo.model.CustomerDto;
 import com.willem.demo.model.OrderDto;
 import com.willem.demo.services.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +27,13 @@ public class OrderController
     {
         OrderDto savedOrder = orderService.saveOrder(orderDto);
         return ResponseEntity.ok(savedOrder);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable("id") Long id, OrderDto orderDto)
+    {
+        OrderDto orderDtoUpdated = orderService.updateOrder(id, orderDto);
+        return ResponseEntity.ok(orderDtoUpdated);
     }
 
     @DeleteMapping("/{id}")

@@ -96,4 +96,18 @@ public class OrderServiceImpl implements OrderService
                 .map(orderMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public OrderDto updateOrder(Long id, OrderDto orderDto)
+    {
+        log.info("Updating order ID {}", id);
+        Order existingOrder = orderRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+
+        orderMapper.updateOrderFromDto(orderDto, existingOrder);
+
+        Order updatedOrder = orderRepository.save(existingOrder);
+        log.info("Order updated  ID {}", id);
+        return orderMapper.toDto(updatedOrder);
+    }
 }

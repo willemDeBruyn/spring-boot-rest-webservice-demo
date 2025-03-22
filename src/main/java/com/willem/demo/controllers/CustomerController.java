@@ -28,6 +28,13 @@ public class CustomerController
         return ResponseEntity.ok(customerService.saveCustomer(customerDto));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("id") Long id, CustomerDto customerDto)
+    {
+        CustomerDto customerDtoUpdated = customerService.updateCustomer(id, customerDto);
+        return ResponseEntity.ok(customerDtoUpdated);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable("id") Long id)
     {

@@ -30,7 +30,10 @@ public class CustomerDto
     @Email
     private String email;
 
+    @NotBlank
     private String phoneNumber;
+
+    @NotBlank
     private String address;
 
     private List<OrderDto> orders;

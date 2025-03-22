@@ -36,6 +36,7 @@ public class Order
     @Positive
     private BigDecimal price;
 
+    @NotBlank
     public enum OrderStatus
     {
         PENDING,
@@ -44,9 +45,11 @@ public class Order
         CANCELLED,
     }
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @NotNull
     private LocalDateTime orderDate;
 
     @ManyToOne
